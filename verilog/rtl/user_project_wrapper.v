@@ -86,8 +86,8 @@ dpll dpll (
     .wb_rst_i(wb_rst_i),
 
     // IO Pads
-    .freq_select (io_in[7:6]),
-    .clk_fin (io_in[5]),
+    .freq_select (io_in[12:11]),
+    .clk_fin (io_in[10]),
     .io_out(io_out[9:8]),
     .io_oeb(io_oeb[9:8])
 

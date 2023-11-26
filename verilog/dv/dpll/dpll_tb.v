@@ -20,48 +20,41 @@
 module dpll_tb;
 	reg clock;
 	reg RSTB;
-	reg CSB;
-	reg power1, power2;
-	reg power3, power4;
+	reg power1;
 
 	wire gpio;
 	wire [37:0] mprj_io;
 
-    reg io_in;
+    reg io_in = 0;
+	reg [1:0] freq_ctl = 2'b0;
 	wire [1:0] mprj_io_0;
 
 	assign mprj_io_0 = mprj_io[9:8];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
-	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+	// assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
+	assign mprj_io[3] = 1'b1;       // Force CSB high.
 
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
-    assign mprj_io[0] = io_in;
+    assign mprj_io[10] = io_in;
+	assign mprj_io[12:11] = freq_ctl;
 
     always #2.5 io_in <= (io_in === 1'b0);
 
 	always #12.5 clock <= (clock === 1'b0);
 
 	initial begin
-		clock = 0;
-        io_in = 0;
-	end
-
-	initial begin
-        @(posedge gpio);
-		@(negedge gpio);
-		@(posedge gpio);
 		$dumpfile("dpll.vcd");
-		$dumpvars(1, dpll_tb);
-        $dumpvars(0, dpll_tb.uut.chip_core.mprj);
+		$dumpvars(0, dpll_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (25) begin
+		repeat (50) begin
 			repeat (1000) @(posedge clock);
-			// $display("+1000 cycles");
+			$display("MPRJ-IO state = %b ", mprj_io[9:8]);
+			$display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
 		`ifdef GL
@@ -89,27 +82,18 @@ module dpll_tb;
 	end
 
 	initial begin
+		clock = 0;
+		$display("START  MPRJ-IO state = %b ", mprj_io[9:8]);
 		RSTB <= 1'b0;
-		CSB  <= 1'b1;		// Force CSB high
+		#1000;
+		RSTB <= 1'b1;	    // Release reset
 		#2000;
-		RSTB <= 1'b1;	    	// Release reset
-		#300000;
-		CSB = 1'b0;		// CSB can be released
 	end
 
 	initial begin		// Power-up sequence
 		power1 <= 1'b0;
-		power2 <= 1'b0;
-		power3 <= 1'b0;
-		power4 <= 1'b0;
-		#100;
+		#200;
 		power1 <= 1'b1;
-		#100;
-		power2 <= 1'b1;
-		#100;
-		power3 <= 1'b1;
-		#100;
-		power4 <= 1'b1;
 	end
 
 	always @(mprj_io) begin
@@ -121,16 +105,14 @@ module dpll_tb;
 	wire flash_io0;
 	wire flash_io1;
 
-	wire VDD3V3;
-	wire VDD1V8;
+	wire VDD;
 	wire VSS;
 	
-	assign VDD3V3 = power1;
-	assign VDD1V8 = power2;
+	assign VDD = power1;
 	assign VSS = 1'b0;
 
 	caravel uut (
-		.VDD 	  (VDD3V3),
+		.VDD 	  (VDD),
 		.VSS	  (VSS),
 		.clock	  (clock),
 		.gpio     (gpio),

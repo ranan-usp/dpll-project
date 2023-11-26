@@ -1,0 +1,43 @@
+https://slash-mochi.net/blog/2022/07/18/docker-cannot-connect-to-the-docker-daemon-at-unix-var-run-docker-sock-is-the-docker-daemon-running-%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/
+
+sudo service docker stop
+sudo service docker start
+
+
+https://qiita.com/Nw3965/items/8e75da0012cb7a451cc2
+
+
+sudo chmod 666 /var/run/docker.sock
+
+
+rm -rf caravel
+git clone -b gfmpw-1b https://github.com/efabless/caravel-gf180mcu ./caravel --depth=1
+
+
+https://github.com/mattvenn/caravel_walkthrough.git
+
+
+http://opencircuitdesign.com/magic/commandref/lef.html
+logo magic gds -> lef
+
+
+
+volare ls-remote --pdk gf180mcu
+volare enable --pdk gf180mcu dd7771c384ed36b91a25e9f8b314355fc26561be
+
+
+
+./lvs/lvs_config.json
+./openlane/user_project_wrapper/
+./openlane/user_project_wrapper/config.json vdd vss
+
+lorem ipsum
+https://www.loremipzum.com/ja
+
+
+
+$ chmod 600 ~/.ssh/id_rsa_efabless
+Host efabless repositories.efabless.com
+  HostName repositories.efabless.com
+  IdentityFile ~/.ssh/id_rsa_efabless_home
+  User git
