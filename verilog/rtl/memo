@@ -1,0 +1,3 @@
+iverilog -o verilog/rtl/dpll.out verilog/rtl/dpll.v verilog/rtl/dpll_tb.v
+vvp verilog/rtl/dpll.out
+gtkwave dpll.vcd
