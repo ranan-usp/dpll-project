@@ -1,0 +1,9 @@
+CARAVEL_ROOT: /home/oe23ranan/dpll-project/caravel
+MCW_ROOT: /home/oe23ranan/dpll-project/mgmt_core_wrapper
+PDK: gf180mcuD
+PDK_ROOT: /tmp/caravel_tutorial/pdk
+USER_PROJECT_ROOT: /home/oe23ranan/dpll-project
+caravan: false
+clk: 25
+emailto:
+- null

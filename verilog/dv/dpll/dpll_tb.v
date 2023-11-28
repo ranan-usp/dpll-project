@@ -53,7 +53,7 @@ module dpll_tb;
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (50) begin
 			repeat (1000) @(posedge clock);
-			$display("MPRJ-IO state = %b ", mprj_io[9:8]);
+			$display("MPRJ-IO state = %b ", mprj_io);
 			$display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
@@ -83,7 +83,7 @@ module dpll_tb;
 
 	initial begin
 		clock = 0;
-		$display("START  MPRJ-IO state = %b ", mprj_io[9:8]);
+		$display("START  MPRJ-IO state = %b ", mprj_io);
 		RSTB <= 1'b0;
 		#1000;
 		RSTB <= 1'b1;	    // Release reset

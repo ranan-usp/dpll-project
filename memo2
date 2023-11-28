@@ -41,3 +41,4 @@ Host efabless repositories.efabless.com
   HostName repositories.efabless.com
   IdentityFile ~/.ssh/id_rsa_efabless_home
   User git
+
